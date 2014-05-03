@@ -1,0 +1,23 @@
+print "Starting maya loading and fbx conversion \n";
+	
+if (`file -q -exists "/Users/shinycroospulle/Downloads/unityclass_mecanim-master/Foursquare/Rube Goldberg/Assets/object.ma"`)
+{		
+	file -o "/Users/shinycroospulle/Downloads/unityclass_mecanim-master/Foursquare/Rube Goldberg/Assets/object.ma";
+	FBXExportEmbeddedTextures -v false;
+	// FBXExportHardEdges -v true;
+	FBXExportApplyConstantKeyReducer -v false;
+	FBXExportShowUI -v false;
+
+	print "Before fbx export\n";
+	FBXExport -f "/Users/shinycroospulle/Downloads/unityclass_mecanim-master/Foursquare/Rube Goldberg/Temp/ExportedFBXFile.fbx";
+	print "after fbx export\n";
+}
+else
+	print "Could not open Maya file.";
+
+
+system ("rm \"/Users/shinycroospulle/Downloads/unityclass_mecanim-master/Foursquare/Rube Goldberg/Temp/CommandPipe\"");
+
+$donepipeKill = `fopen "/Users/shinycroospulle/Downloads/unityclass_mecanim-master/Foursquare/Rube Goldberg/Temp/SyncPipeKill" "w"`;
+fwrite $donepipeKill "Done";
+fclose $donepipeKill;
